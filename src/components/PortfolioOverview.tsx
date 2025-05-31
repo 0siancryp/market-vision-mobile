@@ -1,38 +1,59 @@
 
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, DollarSign, Activity } from "lucide-react";
+import { useBotStatus } from "@/hooks/useBotData";
 
 const PortfolioOverview = () => {
+  const { data: botStatus, isLoading } = useBotStatus();
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[...Array(4)].map((_, index) => (
+          <Card key={index} className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-6">
+              <div className="animate-pulse">
+                <div className="h-4 bg-slate-600 rounded mb-2"></div>
+                <div className="h-8 bg-slate-600 rounded mb-2"></div>
+                <div className="h-4 bg-slate-600 rounded"></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
   const metrics = [
     {
       title: "Total P/L",
-      value: "£247.83",
-      change: "+5.2%",
-      trend: "up",
+      value: botStatus?.total_pnl ? `£${botStatus.total_pnl.toFixed(2)}` : "£0.00",
+      change: botStatus?.total_pnl ? (botStatus.total_pnl > 0 ? `+${Math.abs(botStatus.total_pnl / 100 * 5).toFixed(1)}%` : `-${Math.abs(botStatus.total_pnl / 100 * 5).toFixed(1)}%`) : "0%",
+      trend: botStatus?.total_pnl ? (botStatus.total_pnl > 0 ? "up" : "down") : "neutral",
       icon: DollarSign,
-      color: "text-green-400"
+      color: botStatus?.total_pnl ? (botStatus.total_pnl > 0 ? "text-green-400" : "text-red-400") : "text-gray-400"
     },
     {
       title: "Open Trades",
-      value: "12",
-      change: "4 BTC, 3 ETH, 5 others",
+      value: botStatus?.open_trades_count?.toString() || "0",
+      change: "Active positions",
       trend: "neutral",
       icon: Activity,
       color: "text-blue-400"
     },
     {
       title: "Today's P/L",
-      value: "£34.12",
-      change: "+2.1%",
-      trend: "up",
+      value: botStatus?.daily_pnl ? `£${botStatus.daily_pnl.toFixed(2)}` : "£0.00",
+      change: botStatus?.daily_pnl ? (botStatus.daily_pnl > 0 ? `+${Math.abs(botStatus.daily_pnl / 100 * 2).toFixed(1)}%` : `-${Math.abs(botStatus.daily_pnl / 100 * 2).toFixed(1)}%`) : "0%",
+      trend: botStatus?.daily_pnl ? (botStatus.daily_pnl > 0 ? "up" : "down") : "neutral",
       icon: TrendingUp,
-      color: "text-green-400"
+      color: botStatus?.daily_pnl ? (botStatus.daily_pnl > 0 ? "text-green-400" : "text-red-400") : "text-gray-400"
     },
     {
       title: "Win Rate",
-      value: "67%",
-      change: "Last 30 trades",
+      value: botStatus?.win_rate ? `${botStatus.win_rate.toFixed(0)}%` : "0%",
+      change: "Recent trades",
       trend: "up",
       icon: TrendingUp,
       color: "text-green-400"
