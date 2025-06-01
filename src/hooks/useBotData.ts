@@ -1,7 +1,6 @@
-
 import { useQuery } from '@tanstack/react-query';
 
-const API_BASE_URL = 'http://56.228.42.105:8000';
+const API_BASE_URL = 'https://ca5b-56-228-42-105.ngrok-free.app';
 
 export interface BotStatus {
   status: string;
