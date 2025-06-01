@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-const API_BASE_URL = 'https://fitting-goat-terribly.ngrok-free.app/open-trades';
+const API_BASE_URL = 'https://fitting-goat-terribly.ngrok-free.app';
 
 export interface BotStatus {
   status: string;
