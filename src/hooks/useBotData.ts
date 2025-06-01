@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 // This should be your current, working HTTPS ngrok URL
-const API_BASE_URL = 'https://559e-56-228-42-105.ngrok-free.app'; // Or your latest ngrok URL
+const API_BASE_URL = 'https://fitting-goat-terribly.ngrok-free.app'; // Or your latest ngrok URL
 
 // Interface for the actual response from your /status endpoint
 export interface ApiBotStatus {
