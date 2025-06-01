@@ -8,6 +8,7 @@ import BotStatus from "@/components/BotStatus";
 import PortfolioOverview from "@/components/PortfolioOverview";
 import OpenTrades from "@/components/OpenTrades";
 import RecentTrades from "@/components/RecentTrades";
+import ApiTest from "@/components/ApiTest";
 
 const Index = () => {
   return (
@@ -26,6 +27,11 @@ const Index = () => {
         {/* Bot Status Section */}
         <div className="mb-8">
           <BotStatus />
+        </div>
+
+        {/* API Test Section */}
+        <div className="mb-8">
+          <ApiTest />
         </div>
 
         {/* Portfolio Overview */}
